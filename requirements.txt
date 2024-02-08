@@ -3,6 +3,6 @@ pinecone_client==2.2.2
 streamlit==1.26.0
 unstructured
 unstructured[pdf]
-openai==0.28.1
-chromadb==0.14.5
+openai==1.3.4
+chromadb
 tiktoken
