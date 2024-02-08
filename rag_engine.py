@@ -132,6 +132,33 @@ def boot():
         response = query_llm(st.session_state.retriever, query)
         st.chat_message("ai").write(response)
 
+# def boot():
+#     # Assuming input_fields is a function that initializes input widgets
+#     input_fields()
+    
+#     # The on_click parameter should be linked to a callback function. Assuming process_documents is correctly defined elsewhere
+#     st.button("Submit Documents", on_click=process_documents)
+    
+#     # Initialize session_state for storing messages if not already present
+#     if "messages" not in st.session_state:
+#         st.session_state.messages = []    
+    
+#     # Display messages. Assuming st.chat_message is a custom function or a misunderstanding of Streamlit API.
+#     # Streamlit does not have st.chat_message by default. Replace it with st.write or another appropriate method.
+#     for message in st.session_state.messages:
+#         st.write(f"Human: {message[0]}")  # Display human message
+#         st.write(f"AI: {message[1]}")     # Display AI response
+    
+#     # Assuming st.chat_input and query_llm are placeholders for a text input and a function to process the query respectively.
+#     # Streamlit uses st.text_input for text inputs. Let's adjust to standard Streamlit components.
+#     query = st.text_input("Enter your query:")
+#     if st.button("Ask"):  # Add a button to submit the query
+#         if query:  # Check if query is not empty
+#             response = query_llm(st.session_state.retriever, query)  # Assuming query_llm is a function to get the response
+#             st.session_state.messages.append((query, response))  # Store the query and response
+#             st.write(f"Human: {query}")  # Display the query
+#             st.write(f"AI: {response}")  # Display the response
+
 if __name__ == '__main__':
     #
     boot()
