@@ -21,6 +21,8 @@ TMP_DIR.mkdir(parents=True, exist_ok=True)
 LOCAL_VECTOR_STORE_DIR = Path(__file__).resolve().parent.joinpath('data', 'vector_store')
 LOCAL_VECTOR_STORE_DIR.mkdir(parents=True, exist_ok=True)
 
+
+
 st.set_page_config(page_title="RAG")
 st.title("Retrieval Augmented Generation Engine")
 
@@ -115,50 +117,43 @@ def process_documents():
         except Exception as e:
             st.error(f"An error occurred: {e}")
 
-def boot():
-    #
-    input_fields()
-    #
-    st.button("Submit Documents", on_click=process_documents)
-    #
-    if "messages" not in st.session_state:
-        st.session_state.messages = []    
-    #
-    for message in st.session_state.messages:
-        st.chat_message('human').write(message[0])
-        st.chat_message('ai').write(message[1])    
-    #
-    if query := st.chat_input():
-        st.chat_message("human").write(query)
-        response = query_llm(st.session_state.retriever, query)
-        st.chat_message("ai").write(response)
-
 # def boot():
-#     # Assuming input_fields is a function that initializes input widgets
+#     #
 #     input_fields()
-    
-#     # The on_click parameter should be linked to a callback function. Assuming process_documents is correctly defined elsewhere
+#     #
 #     st.button("Submit Documents", on_click=process_documents)
-    
-#     # Initialize session_state for storing messages if not already present
+#     #
 #     if "messages" not in st.session_state:
 #         st.session_state.messages = []    
-    
-#     # Display messages. Assuming st.chat_message is a custom function or a misunderstanding of Streamlit API.
-#     # Streamlit does not have st.chat_message by default. Replace it with st.write or another appropriate method.
+#     #
 #     for message in st.session_state.messages:
-#         st.write(f"Human: {message[0]}")  # Display human message
-#         st.write(f"AI: {message[1]}")     # Display AI response
-    
-#     # Assuming st.chat_input and query_llm are placeholders for a text input and a function to process the query respectively.
-#     # Streamlit uses st.text_input for text inputs. Let's adjust to standard Streamlit components.
-#     query = st.text_input("Enter your query:")
-#     if st.button("Ask"):  # Add a button to submit the query
-#         if query:  # Check if query is not empty
-#             response = query_llm(st.session_state.retriever, query)  # Assuming query_llm is a function to get the response
-#             st.session_state.messages.append((query, response))  # Store the query and response
-#             st.write(f"Human: {query}")  # Display the query
-#             st.write(f"AI: {response}")  # Display the response
+#         st.chat_message('human').write(message[0])
+#         st.chat_message('ai').write(message[1])    
+#     #
+#     if query := st.chat_input():
+#         st.chat_message("human").write(query)
+#         response = query_llm(st.session_state.retriever, query)
+#         st.chat_message("ai").write(response)
+
+def boot():
+    input_fields()
+    st.button("Submit Documents", on_click=process_documents)
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    for message in st.session_state.messages:
+        st.chat_message('human').write(message[0])
+        st.chat_message('ai').write(message[1])
+    if query := st.chat_input():
+        if 'retriever' in st.session_state:
+            st.chat_message("human").write(query)
+            response = query_llm(query)  # Adjusted to not directly pass the retriever
+            st.chat_message("ai").write(response)
+        else:
+            st.error("Please submit documents to initialize the retriever before querying.")
+
+
+
+
 
 if __name__ == '__main__':
     #
