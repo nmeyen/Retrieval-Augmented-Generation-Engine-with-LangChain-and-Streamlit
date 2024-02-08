@@ -146,7 +146,7 @@ def boot():
     if query := st.chat_input():
         if 'retriever' in st.session_state:
             st.chat_message("human").write(query)
-            response = query_llm(query)  # Adjusted to not directly pass the retriever
+            response = query_llm(st.session_state.retriever,query)  # Adjusted to not directly pass the retriever
             st.chat_message("ai").write(response)
         else:
             st.error("Please submit documents to initialize the retriever before querying.")
