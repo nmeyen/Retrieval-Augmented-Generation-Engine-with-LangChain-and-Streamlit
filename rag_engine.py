@@ -16,9 +16,10 @@ from langchain.memory.chat_message_histories import StreamlitChatMessageHistory
 
 import streamlit as st
 
-
 TMP_DIR = Path(__file__).resolve().parent.joinpath('data', 'tmp')
+TMP_DIR.mkdir(parents=True, exist_ok=True)
 LOCAL_VECTOR_STORE_DIR = Path(__file__).resolve().parent.joinpath('data', 'vector_store')
+LOCAL_VECTOR_STORE_DIR.mkdir(parents=True, exist_ok=True)
 
 st.set_page_config(page_title="RAG")
 st.title("Retrieval Augmented Generation Engine")
